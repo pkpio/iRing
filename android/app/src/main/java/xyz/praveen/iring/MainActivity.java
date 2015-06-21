@@ -6,14 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import xyz.praveen.iring.AccessControl.AccessController;
+
 
 public class MainActivity extends AppCompatActivity {
     static final String DEBUG_TAG = "MotionTest";
+
+    AccessController mAccessControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Admin permission check
+        mAccessControl = new AccessController();
+        mAccessControl.checkDeviceAdminRights(this);
     }
 
     @Override
@@ -26,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(DEBUG_TAG, "Action was DOWN");
                 return true;
             case (MotionEvent.ACTION_UP):
+                mAccessControl.lockDevice(this);
                 Log.d(DEBUG_TAG, "Action was UP");
                 return true;
             case (MotionEvent.ACTION_CANCEL):
