@@ -12,6 +12,7 @@ using Gadgeteer.Networking;
 using GT = Gadgeteer;
 using GTM = Gadgeteer.Modules;
 using Gadgeteer.Modules.GHIElectronics;
+using iRingGadgeteer.Modules;
 
 namespace iRingGadgeteer
 {
@@ -36,6 +37,17 @@ namespace iRingGadgeteer
 
             // Use Debug.Print to show messages in Visual Studio's "Output" window during debugging.
             Debug.Print("Program Started");
+
+            // Init Button
+            ButtonHandler btnHandler = new ButtonHandler(button);
+            btnHandler.Start();
+
+            //Init Accelerometer
+            AccelHandler accHandler = new AccelHandler(accelerometer);
+            accHandler.Start();
+
+            // Setup a controller
+            Controller mController = new Controller(btnHandler, accHandler);
         }
     }
 }
