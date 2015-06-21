@@ -39,6 +39,11 @@
   <!-- Everything below here is custom to .NET MF / Gadgeteer template-->
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="Controller.cs" />
+    <Compile Include="Modes\InputMode.cs" />
+    <Compile Include="Modes\LockMode.cs" />
+    <Compile Include="Modules\AccelHandler.cs" />
+    <Compile Include="Modules\ButtonHandler.cs" />
     <Compile Include="Program.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

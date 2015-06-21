@@ -6,9 +6,9 @@ namespace iRingGadgeteer.Modules
 {
     class AccelHandler
     {
-        double accX;
-        double accY;
-        double accZ;
+        int accX;
+        int accY;
+        int accZ;
 
         /**
          * Accelerometer event handler delegate / type
@@ -33,10 +33,10 @@ namespace iRingGadgeteer.Modules
 
         void accelerometer_MeasurementComplete(Accelerometer sender, Accelerometer.MeasurementCompleteEventArgs e)
         {
-            accX = e.X;
-            accY = e.Y;
-            accZ = e.Z;
-            Debug.Print("X: " + accX + "Y: " + accY + "Z: " + accZ);
+            accX = (int) (e.X * 1000);
+            accY = (int) (e.Y * 1000);
+            //accZ = (int) (e.Z * 10);
+            Debug.Print("X: " + accX + "  Y: " + accY ); //+ "  Z: " + accZ);
         }
 
         public void Start()
