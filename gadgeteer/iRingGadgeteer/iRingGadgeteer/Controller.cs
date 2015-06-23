@@ -6,45 +6,68 @@ namespace iRingGadgeteer
 {
     class Controller
     {
-        private ButtonHandler mButtonHandler;
+        private ButtonHandler mButtonHandlerCali;
+        private ButtonHandler mButtonHandlerMode;
         private AccelHandler mAccelHandler;
         
-        public Controller(ButtonHandler btnHandler, AccelHandler accHandler)
+        public Controller(ButtonHandler btnHandlerCali, ButtonHandler btnHandlerMode, AccelHandler accHandler)
         {
-            this.mButtonHandler = btnHandler;
+            this.mButtonHandlerCali = btnHandlerCali;
+            this.mButtonHandlerMode = btnHandlerMode;
             this.mAccelHandler = accHandler;
 
-            mButtonHandler.SetCallback(ButtonEvent);
+            mButtonHandlerCali.SetCallback(ButtonEventCali);
+            mButtonHandlerMode.SetCallback(ButtonEventMode);
             mAccelHandler.SetCallback(AccelEvent);
         }
 
-        void ButtonEvent(int action)
+        void ButtonEventCali(int action)
         {
             if (action == ButtonHandler.BTN_RELEASE)
             {
-                
+                mAccelHandler.CalibrateAccel();
             }
         }
 
+        void ButtonEventMode(int action)
+        {
+            if (action == ButtonHandler.BTN_RELEASE)
+            {
+                //TODO: forward mode change via bluetooth
+            }
+        }
+
+        /*
+         * fired when a motion is detected, gets then send via bluetooth to the phone
+         */
         void AccelEvent(int action)
         {
-            
+            //TODO: forward motion action and acceleration via bluetooth
+
         }
 
         /**
-         * Set a callback for Button events.
-         */
-        public void SetButtonCallback(ButtonHandler.BtnEventCallback callback)
+         * Set a callback for calibrate Button events.
+         *
+        public void SetButtonCallbackCali(ButtonHandler.BtnEventCallback callback)
         {
-            mButtonHandler.SetCallback(callback);
+            mButtonHandlerCali.SetCallback(callback);
+        }
+
+        /**
+         * Set a callback for Mode Button events.
+         *
+        public void SetButtonCallbackMode(ButtonHandler.BtnEventCallback callback)
+        {
+            mButtonHandlerMode.SetCallback(callback);
         }
 
         /**
          * Set a callback for Accelerometer events.
-         */
+         *
         public void SetAccelCallback(AccelHandler.AccEventCallback callback)
         {
             mAccelHandler.SetCallback(callback);
-        }
+        }*/
     }
 }

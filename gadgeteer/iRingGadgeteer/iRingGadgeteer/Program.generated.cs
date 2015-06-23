@@ -21,6 +21,9 @@ namespace iRingGadgeteer {
         /// <summary>The Button module using socket 14 of the mainboard.</summary>
         private Gadgeteer.Modules.GHIElectronics.Button button;
         
+        /// <summary>The Button module using socket 12 of the mainboard.</summary>
+        private Gadgeteer.Modules.GHIElectronics.Button button2;
+        
         /// <summary>This property provides access to the Mainboard API. This is normally not necessary for an end user program.</summary>
         protected new static GHIElectronics.Gadgeteer.FEZSpider Mainboard {
             get {
@@ -45,6 +48,7 @@ namespace iRingGadgeteer {
         private void InitializeModules() {
             this.accelerometer = new GTM.GHIElectronics.Accelerometer(10);
             this.button = new GTM.GHIElectronics.Button(14);
+            this.button2 = new GTM.GHIElectronics.Button(12);
         }
     }
 }

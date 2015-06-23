@@ -6,9 +6,17 @@ namespace iRingGadgeteer.Modules
 {
     class AccelHandler
     {
-        int accX;
-        int accY;
-        int accZ;
+        public const int MOVEMENT_UP = 1;
+        public const int MOVEMENT_RIGHT = 2;
+        public const int MOVEMENT_DOWN = 3;
+        public const int MOVEMENT_LEFT = 4;
+        public const int MEASUREMENT_COMPLETE = 5;
+        public const int THRESHOLD_EXCEEDED = 6;
+
+        private int accX;
+        private int accY;
+        private int accZ;
+        private int accel;
 
         /**
          * Accelerometer event handler delegate / type
@@ -31,12 +39,59 @@ namespace iRingGadgeteer.Modules
             this.eventCallback = accEventHandle;
         }
 
+        /**
+         * Calibrating the accelerometer
+         */
+        public void CalibrateAccel()
+        {
+            mAccel.Calibrate();
+            Debug.Print("calibrated");
+        }
+
+        /*
+         * get acceleration of movement event
+         */
+        public int getAccel()
+        {
+            return accel;
+        }
+
         void accelerometer_MeasurementComplete(Accelerometer sender, Accelerometer.MeasurementCompleteEventArgs e)
         {
             accX = (int) (e.X * 1000);
             accY = (int) (e.Y * 1000);
-            //accZ = (int) (e.Z * 10);
-            Debug.Print("X: " + accX + "  Y: " + accY ); //+ "  Z: " + accZ);
+            accZ = (int) ((e.Z * 1000)-1000);
+            //Debug.Print("X: " + accX%200 + "  Y: " + accY%200 + "  Z: " + accZ%200);
+            if(accZ < -150)
+            {
+                accel = accZ;
+                SendEventToCallback(MOVEMENT_DOWN);
+                Debug.Print("down "+accel);
+            }
+            if(accZ > 300)
+            {
+                accel = accZ;
+                SendEventToCallback(MOVEMENT_UP);
+                Debug.Print("up "+accel);
+            }
+            if(accX < -100)
+            {
+                accel = accX;
+                SendEventToCallback(MOVEMENT_RIGHT);
+                Debug.Print("right "+accel);
+            }
+            if(accX > 100)
+            {
+                accel = accX;
+                SendEventToCallback(MOVEMENT_LEFT);
+                Debug.Print("left "+accel);
+            }
+        }
+
+        private void SendEventToCallback(int action)
+        {
+            if (eventCallback != null)
+                eventCallback(action);
         }
 
         public void Start()

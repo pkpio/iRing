@@ -79,5 +79,20 @@
         </socketUses>
       </module>
     </gadgeteerModelHasGadgeteerHardware>
+    <gadgeteerModelHasGadgeteerHardware Id="0af33a58-3902-4240-9d16-ef21bc0f8de7">
+      <module Id="b58a4224-5b10-460a-8927-3f75861ede36" cachedDefinition="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;ModuleDefinition xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; Name=&quot;Button&quot; Manufacturer=&quot;GHI Electronics&quot; Description=&quot;A Button module&quot; Type=&quot;Gadgeteer.Modules.GHIElectronics.Button&quot; HardwareVersion=&quot;1.2&quot; Image=&quot;C:\Program Files (x86)\GHI Electronics\GHI .NET Gadgeteer SDK\Modules\Button\Image.jpg&quot; BoardWidth=&quot;22&quot; BoardHeight=&quot;22&quot; MinimumGadgeteerCoreVersion=&quot;2.43.800&quot; HelpUrl=&quot;http://www.ghielectronics.com/catalog/product/299&quot; UniqueId=&quot;8367136d-c1d7-41ae-89c7-30ed035b758b&quot; InstanceName=&quot;button&quot; ModuleSuppliesPower=&quot;false&quot;&gt;&#xD;&#xA;  &lt;Power&gt;&#xD;&#xA;    &lt;PowerRequirements Voltage=&quot;3.3&quot;&gt;&#xD;&#xA;      &lt;TypicalCurrent&gt;0.01&lt;/TypicalCurrent&gt;&#xD;&#xA;      &lt;MaximumCurrent&gt;0&lt;/MaximumCurrent&gt;&#xD;&#xA;    &lt;/PowerRequirements&gt;&#xD;&#xA;    &lt;PowerRequirements Voltage=&quot;5&quot;&gt;&#xD;&#xA;      &lt;TypicalCurrent&gt;0&lt;/TypicalCurrent&gt;&#xD;&#xA;      &lt;MaximumCurrent&gt;0&lt;/MaximumCurrent&gt;&#xD;&#xA;    &lt;/PowerRequirements&gt;&#xD;&#xA;  &lt;/Power&gt;&#xD;&#xA;  &lt;ProvidedSockets /&gt;&#xD;&#xA;  &lt;Assemblies&gt;&#xD;&#xA;    &lt;Assembly MFVersion=&quot;4.2&quot; Name=&quot;GTM.GHIElectronics.Button&quot; /&gt;&#xD;&#xA;    &lt;Assembly MFVersion=&quot;4.3&quot; Name=&quot;GTM.GHIElectronics.Button&quot; /&gt;&#xD;&#xA;  &lt;/Assemblies&gt;&#xD;&#xA;  &lt;LibrariesProvided /&gt;&#xD;&#xA;  &lt;Sockets&gt;&#xD;&#xA;    &lt;Socket Orientation=&quot;270&quot; Left=&quot;11.18&quot; Top=&quot;11.53&quot; TypesLabel=&quot;XY&quot; ConstructorOrder=&quot;1&quot; Optional=&quot;false&quot;&gt;&#xD;&#xA;      &lt;Types&gt;&#xD;&#xA;        &lt;Type&gt;X&lt;/Type&gt;&#xD;&#xA;        &lt;Type&gt;Y&lt;/Type&gt;&#xD;&#xA;      &lt;/Types&gt;&#xD;&#xA;      &lt;Pins&gt;&#xD;&#xA;        &lt;Pin Shared=&quot;false&quot;&gt;3&lt;/Pin&gt;&#xD;&#xA;        &lt;Pin Shared=&quot;false&quot;&gt;4&lt;/Pin&gt;&#xD;&#xA;      &lt;/Pins&gt;&#xD;&#xA;    &lt;/Socket&gt;&#xD;&#xA;  &lt;/Sockets&gt;&#xD;&#xA;  &lt;ExtraLibrariesRequired /&gt;&#xD;&#xA;&lt;/ModuleDefinition&gt;" name="button2" moduleType="Gadgeteer.Modules.GHIElectronics.Button" moduleDefinitionId="8367136d-c1d7-41ae-89c7-30ed035b758b">
+        <socketUses>
+          <moduleHasSocketUses Id="a75afbf1-e763-4433-85a1-e9f4d9aed56c">
+            <socketUse Id="ccedf983-39ab-4928-b890-7fc9fa4c9f39" label="XY">
+              <socket>
+                <socketUseReferencesSocket Id="936d99e1-d2dd-4af6-bba8-cc61cfdb578a">
+                  <socketMoniker Id="a02567bd-f5f8-48e5-9e51-61bdf42c3de6" />
+                </socketUseReferencesSocket>
+              </socket>
+            </socketUse>
+          </moduleHasSocketUses>
+        </socketUses>
+      </module>
+    </gadgeteerModelHasGadgeteerHardware>
   </gadgeteerHardware>
 </gadgeteerModel>

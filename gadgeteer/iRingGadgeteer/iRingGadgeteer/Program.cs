@@ -39,15 +39,18 @@ namespace iRingGadgeteer
             Debug.Print("Program Started");
 
             // Init Button
-            ButtonHandler btnHandler = new ButtonHandler(button);
-            btnHandler.Start();
+            ButtonHandler btnHandlerCali = new ButtonHandler(button);
+            btnHandlerCali.Start();
+            // Init Button
+            ButtonHandler btnHandlerMode = new ButtonHandler(button2);
+            btnHandlerMode.Start();
 
             //Init Accelerometer
             AccelHandler accHandler = new AccelHandler(accelerometer);
             accHandler.Start();
 
             // Setup a controller
-            Controller mController = new Controller(btnHandler, accHandler);
+            Controller mController = new Controller(btnHandlerCali, btnHandlerMode, accHandler);
         }
     }
 }
