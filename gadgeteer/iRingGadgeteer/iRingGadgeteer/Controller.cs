@@ -6,9 +6,13 @@ namespace iRingGadgeteer
 {
     class Controller
     {
+        public const int MODE_LOCK = 1;
+        public const int MODE_INPUT = 2;
+
         private ButtonHandler mButtonHandlerCali;
         private ButtonHandler mButtonHandlerMode;
         private AccelHandler mAccelHandler;
+        private int currentMode = MODE_LOCK;
         
         public Controller(ButtonHandler btnHandlerCali, ButtonHandler btnHandlerMode, AccelHandler accHandler)
         {
@@ -33,6 +37,17 @@ namespace iRingGadgeteer
         {
             if (action == ButtonHandler.BTN_RELEASE)
             {
+                if(currentMode == MODE_LOCK)
+                {
+                    currentMode = MODE_INPUT;
+                    Debug.Print("Mode changed to input");
+                }
+                else
+                {
+                    currentMode = MODE_LOCK;
+                    Debug.Print("Mode changed to lock");
+                }
+                
                 //TODO: forward mode change via bluetooth
             }
         }
