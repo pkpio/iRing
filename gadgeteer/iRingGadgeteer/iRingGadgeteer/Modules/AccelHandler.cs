@@ -61,26 +61,26 @@ namespace iRingGadgeteer.Modules
             accX = (int) (e.X * 1000);
             accY = (int) (e.Y * 1000);
             accZ = (int) ((e.Z * 1000)-1000);
-            Debug.Print("" + accX + "," + accY + " ," + accZ);
-            /*if(accZ < -150)
+            Debug.Print("" + accX + "," + accY + "," + accZ);
+            /*if(accX < -30 && accY >200 && accZ < -100)
             {
                 accel = accZ;
                 SendEventToCallback(MOVEMENT_DOWN);
                 Debug.Print("down "+accel);
             }
-            if(accZ > 300)
+            if(accX > 100 && accY < -100)
             {
                 accel = accZ;
                 SendEventToCallback(MOVEMENT_UP);
                 Debug.Print("up "+accel);
             }
-            if(accX < -100)
+            if(accX >100 && accY > 50 && accZ < -100)
             {
                 accel = accX;
                 SendEventToCallback(MOVEMENT_RIGHT);
                 Debug.Print("right "+accel);
             }
-            if(accX > 100)
+            if(accX < -100 && accY < -50 && accZ > 30)
             {
                 accel = accX;
                 SendEventToCallback(MOVEMENT_LEFT);
