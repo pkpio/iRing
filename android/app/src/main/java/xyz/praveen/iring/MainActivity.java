@@ -5,8 +5,10 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 
 import xyz.praveen.iring.AccessControl.AccessController;
+import xyz.praveen.iring.TouchPattern.TouchHandler;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        View hello = findViewById(R.id.hello);
+        hello.setOnTouchListener(new TouchHandler(this));
 
         // Admin permission check
         mAccessControl = new AccessController();
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(DEBUG_TAG, "Action was DOWN");
                 return true;
             case (MotionEvent.ACTION_UP):
-                mAccessControl.lockDevice(this);
+                //mAccessControl.lockDevice(this);
                 Log.d(DEBUG_TAG, "Action was UP");
                 return true;
             case (MotionEvent.ACTION_CANCEL):
