@@ -1,16 +1,10 @@
-package xyz.praveen.iring.TouchPattern;
-TouchCallback.java
+package xyz.praveen.iring.touchpattern;
+
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import static java.lang.StrictMath.abs;
 
-/**
- * Created by praveen on 17/6/15.
- */
-public interface TouchCallback{
-
-}
 public class TouchHandler implements View.OnTouchListener {
     Context mContext;
 

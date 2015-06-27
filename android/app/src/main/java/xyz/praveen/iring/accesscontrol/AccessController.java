@@ -1,4 +1,4 @@
-package xyz.praveen.iring.AccessControl;
+package xyz.praveen.iring.accesscontrol;
 
 import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
@@ -15,7 +15,7 @@ import xyz.praveen.iring.IRingAdminReceiver;
 public class AccessController {
     static final String DEBUG_TAG = AccessController.class.getSimpleName();
 
-    //-TODO- Implement auto locking of devices based on events from Bluetooth and OnScreen
+    //-TODO- Implement auto locking of devices based on events from Ethernet and OnScreen
 
     /**
      * Lock the screen. Possible only if admin rights are available
