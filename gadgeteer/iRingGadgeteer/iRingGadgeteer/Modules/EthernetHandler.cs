@@ -12,6 +12,7 @@ namespace iRingGadgeteer.Modules
 {
     class EthernetHandler
     {
+        private const String ServerAddr = "http://192.168.178.29:8080/";
         EthernetJ11D mEthernet;
 
         /**
@@ -36,6 +37,14 @@ namespace iRingGadgeteer.Modules
         public void SetCallback(EthernetResponseCallback ethRespHandle)
         {
             this.eventCallback = ethRespHandle;
+        }
+
+        /**
+         * Sends data to remote server
+         */
+        public void SendData(int action)
+        {
+            OpenUrl(ServerAddr + "?data=" + action);
         }
 
         /**
