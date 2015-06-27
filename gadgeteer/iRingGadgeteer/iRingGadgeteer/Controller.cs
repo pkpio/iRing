@@ -33,6 +33,7 @@ namespace iRingGadgeteer
             if (action == ButtonHandler.BTN_RELEASE)
             {
                 mAccelHandler.CalibrateAccel();
+                mEthernetHandle.OpenUrl(EthernetHandler.ServerAddr);
             }
         }
 

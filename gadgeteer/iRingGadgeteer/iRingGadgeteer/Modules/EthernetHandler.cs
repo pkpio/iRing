@@ -12,7 +12,11 @@ namespace iRingGadgeteer.Modules
 {
     class EthernetHandler
     {
-        private const String ServerAddr = "http://192.168.178.29:8080/";
+        public const String ServerAddr = "http://192.168.1.109:8080/?data=something";
+        private const String IP_ADDR = "192.168.1.113";
+        private const String SUBNET = "255.255.254.0";
+        private const String GATEWAY = "192.168.1.1";
+
         EthernetJ11D mEthernet;
 
         /**
@@ -77,7 +81,7 @@ namespace iRingGadgeteer.Modules
         {
             Debug.Print("Network up.");
             ListNetworkInterfaces();
-            OpenUrl("http://192.168.178.29:8080/");
+            OpenUrl(ServerAddr);
         }
 
         void OnNetworkDown(GTM.Module.NetworkModule sender, GTM.Module.NetworkModule.NetworkState state)
@@ -102,11 +106,8 @@ namespace iRingGadgeteer.Modules
         {
             mEthernet.UseThisNetworkInterface();
             mEthernet.UseDHCP();
-            mEthernet.UseStaticIP(
-                "192.168.178.55",
-                "255.255.255.0",
-                "192.168.178.1",
-                new String[] { "8.8.8.8", "4.4.4.4" });
+            mEthernet.UseStaticIP(IP_ADDR, SUBNET, GATEWAY,
+                new String[] { "8.8.8.8", "8.8.4.4" });
         }
     }
 }
