@@ -34,7 +34,7 @@ namespace iRingGadgeteer
 
             //Init Accelerometer
             AccelHandler accHandler = new AccelHandler(accelerometer);
-            accHandler.Start();
+            //accHandler.Start();
 
             // Setup a controller
             Controller mController = new Controller(btnHandlerCali, btnHandlerMode, accHandler);
@@ -57,6 +57,9 @@ namespace iRingGadgeteer
             Debug.Print("Network up.");
 
             ListNetworkInterfaces();
+
+            WebClient.GetFromWeb("http://192.168.178.29:8080/").ResponseReceived +=
+                new HttpRequest.ResponseHandler(Program_ResponseReceived);
         }
 
 
@@ -76,12 +79,26 @@ namespace iRingGadgeteer
 
         void SetupEthernet()
         {
-            ethernet.NetworkInterface.Open();
-            //ethernet.UseDHCP();69.254.
+            ethernet.UseThisNetworkInterface();
+            ethernet.UseDHCP();
             ethernet.UseStaticIP(
-                "169.254.220.163",
+                "192.168.178.55",
                 "255.255.255.0",
-                "192.168.2.1");
+                "192.168.178.1",
+                new String[]{"8.8.8.8", "4.4.4.4"});
+        }
+
+        void Program_ResponseReceived(HttpRequest sender, HttpResponse response)
+        {
+            if (response.StatusCode == "200")
+            {
+                Debug.Print("HTTP-Response: " + response.StatusCode);
+                Debug.Print("HTTP-Response: " + response.Text);  
+            }
+            else
+            {
+                Debug.Print("HTTP-Response: " + response.StatusCode);
+            }
         }
     }
 }
