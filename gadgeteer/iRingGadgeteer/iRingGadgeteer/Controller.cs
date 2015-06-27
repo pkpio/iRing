@@ -9,16 +9,19 @@ namespace iRingGadgeteer
         public const int MODE_LOCK = 1;
         public const int MODE_INPUT = 2;
 
+        private EthernetHandler mEthernetHandle;
         private ButtonHandler mButtonHandlerCali;
         private ButtonHandler mButtonHandlerMode;
         private AccelHandler mAccelHandler;
         private int currentMode = MODE_LOCK;
         
-        public Controller(ButtonHandler btnHandlerCali, ButtonHandler btnHandlerMode, AccelHandler accHandler)
+        public Controller(ButtonHandler btnHandlerCali, ButtonHandler btnHandlerMode, AccelHandler accHandler,
+            EthernetHandler ethernetHandle)
         {
             this.mButtonHandlerCali = btnHandlerCali;
             this.mButtonHandlerMode = btnHandlerMode;
             this.mAccelHandler = accHandler;
+            this.mEthernetHandle = ethernetHandle;
 
             mButtonHandlerCali.SetCallback(ButtonEventCali);
             mButtonHandlerMode.SetCallback(ButtonEventMode);
