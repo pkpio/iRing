@@ -6,8 +6,8 @@ namespace iRingGadgeteer
 {
     class Controller
     {
-        public const int MODE_LOCK = 1;
-        public const int MODE_INPUT = 2;
+        public const int MODE_LOCK = 5;
+        public const int MODE_INPUT = 6;
 
         private EthernetHandler mEthernetHandle;
         private ButtonHandler mButtonHandlerCali;
@@ -15,8 +15,7 @@ namespace iRingGadgeteer
         private AccelHandler mAccelHandler;
         private int currentMode = MODE_LOCK;
         
-        public Controller(ButtonHandler btnHandlerCali, ButtonHandler btnHandlerMode, AccelHandler accHandler,
-            EthernetHandler ethernetHandle)
+        public Controller(ButtonHandler btnHandlerCali, ButtonHandler btnHandlerMode, AccelHandler accHandler, EthernetHandler ethernetHandle)
         {
             this.mButtonHandlerCali = btnHandlerCali;
             this.mButtonHandlerMode = btnHandlerMode;
@@ -51,8 +50,8 @@ namespace iRingGadgeteer
                     currentMode = MODE_LOCK;
                     Debug.Print("Mode changed to lock");
                 }
-                
-                //TODO: forward mode change via bluetooth
+
+                mEthernetHandle.SendData(currentMode);
             }
         }
 
@@ -61,7 +60,7 @@ namespace iRingGadgeteer
          */
         void AccelEvent(int action)
         {
-            //TODO: forward motion action and acceleration via bluetooth
+            mEthernetHandle.SendData(action);
 
         }
 
