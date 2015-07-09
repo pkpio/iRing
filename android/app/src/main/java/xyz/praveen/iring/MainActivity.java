@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
 
         // Admin permission check
         mAccessControl = new AccessController();
-        mAccessControl.checkDeviceAdminRights(this);
+        AccessController.checkDeviceAdminRights(this);
 
         // Init server
         ServerHandle mServerHandle = new ServerHandle(this);
@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
     }
 
     @Override
-    public void onGadgetAction(final String action) {
+    public void onGadgetAction(final int action) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                helloView.setText(action);
+                helloView.setText("Action was : " + action);
             }
         });
     }

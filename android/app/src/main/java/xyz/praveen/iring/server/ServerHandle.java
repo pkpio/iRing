@@ -5,17 +5,28 @@ import android.util.Log;
 import java.io.IOException;
 
 import fi.iki.elonen.NanoHTTPD;
+import xyz.praveen.iring.util.LogUtils;
+
+import static xyz.praveen.iring.util.LogUtils.LOGE;
+import static xyz.praveen.iring.util.LogUtils.LOGI;
+import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 /**
  * Created by praveen on 27/6/15.
  */
 public class ServerHandle {
-    final String DEBUG_TAG = this.getClass().getName();
+    final static String TAG = makeLogTag(ServerHandle.class);
+
     private final int PORT = 8080;
 
     MyHTTPD mServer;
     OnGadgetActionListener mOnActionListener;
 
+    /**
+     * Init server handle. Server must be started using @see startServer method.
+     *
+     * @param onActionListener To receive callbacks on Gadget action.
+     */
     public ServerHandle(OnGadgetActionListener onActionListener) {
         this.mOnActionListener = onActionListener;
     }
@@ -28,6 +39,7 @@ public class ServerHandle {
             mServer = new MyHTTPD();
             mServer.start();
         } catch (IOException e) {
+            LOGE(TAG, "Failed to start server!");
             e.printStackTrace();
         }
     }
@@ -40,6 +52,9 @@ public class ServerHandle {
     }
 
 
+    /**
+     * Custom HTTP class to handle server requests
+     */
     private class MyHTTPD extends NanoHTTPD {
 
         public MyHTTPD() throws IOException {
@@ -48,8 +63,8 @@ public class ServerHandle {
 
         @Override
         public Response serve(IHTTPSession session) {
-            String action = session.getParms().get("data");
-            Log.d(DEBUG_TAG, action);
+            int action = Integer.valueOf(session.getParms().get("data"));
+            LOGI(TAG, "Gadget action code : " + action);
 
             // Pass action
             if (mOnActionListener != null)
