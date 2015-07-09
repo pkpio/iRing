@@ -4,9 +4,16 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 
+import xyz.praveen.iring.util.LogUtils;
+
 import static java.lang.StrictMath.abs;
+import static xyz.praveen.iring.util.LogUtils.LOGD;
+import static xyz.praveen.iring.util.LogUtils.LOGI;
+import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 public class TouchHandler implements View.OnTouchListener {
+    final static String TAG = makeLogTag(TouchHandler.class);
+
     Context mContext;
     OnTouchListener mOnTouchListener;
 
@@ -22,6 +29,12 @@ public class TouchHandler implements View.OnTouchListener {
     private float dx = 0f;
     private float dy = 0f;
 
+    /**
+     * An instance of TouchHandler. This must be sent on a view ideally spanning the whole screen
+     *
+     * @param context       Context
+     * @param touchListener Listener to receive callback for touch events
+     */
     public TouchHandler(Context context, OnTouchListener touchListener) {
         this.mContext = context;
         this.mOnTouchListener = touchListener;
@@ -39,28 +52,27 @@ public class TouchHandler implements View.OnTouchListener {
             float yDown = motionEvent.getY();
             lastXaxis = xDown;
             lastYaxis = yDown;
-            System.out.print("xDown is   " + xDown);
-            System.out.print("  yDown is" + yDown);
+            LOGD(TAG, "xDown is : " + xDown);
+            LOGD(TAG, "yDown is : " + yDown);
         }
         if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
             float xRelease = motionEvent.getX();
             float yRelease = motionEvent.getY();
             dx = xRelease - lastXaxis;
             dy = yRelease - lastYaxis;
-            System.out.print("dx is   " + dx);
-            System.out.print("  dy is" + dy);
-            System.out.print(" lastYaxis is " + lastYaxis);
-            System.out.print("xRelease is   " + xRelease);
-            System.out.print(" yRelease is" + yRelease);
+
+            LOGD(TAG, "dx is : " + dx);
+            LOGD(TAG, "dy is : " + dy);
+            LOGD(TAG, "last Yaxis is : " + lastYaxis);
+            LOGD(TAG, "xRelease is  : " + xRelease);
+            LOGD(TAG, "yRelease is  : " + yRelease);
         }
 
 
-        if (dy < 0 & abs(dy) > abs(dx)) {
+        if (dy < 0 & abs(dy) > abs(dx))
             SendEventToCallback(MOVEMENT_UP);
-        }
-        if (dy > 0 & abs(dy) > abs(dx)) {
+        if (dy > 0 & abs(dy) > abs(dx))
             SendEventToCallback(MOVEMENT_DOWN);
-        }
         if (dx > 0 & abs(dx) > abs(dy))
             SendEventToCallback(MOVEMENT_RIGHT);
         if (dx < 0 & abs(dx) > abs(dy))
@@ -74,10 +86,10 @@ public class TouchHandler implements View.OnTouchListener {
 
 
     /**
-     * This callback will be called when ever a Touch event occurs
+     * A callback will be made when ever a Touch event occurs
      */
     private void SendEventToCallback(int action) {
-        System.out.println("The action is " + action);
+        LOGI(TAG, "Action is : " + action);
         if (mOnTouchListener != null)
             mOnTouchListener.onTouchEvent(action);
     }
