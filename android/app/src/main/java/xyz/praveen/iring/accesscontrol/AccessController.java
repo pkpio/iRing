@@ -9,13 +9,13 @@ import android.util.Log;
 
 import xyz.praveen.iring.IRingAdminReceiver;
 
+import static xyz.praveen.iring.util.LogUtils.makeLogTag;
+
 /**
  * Created by praveen on 17/6/15.
  */
 public class AccessController {
-    static final String DEBUG_TAG = AccessController.class.getSimpleName();
-
-    //-TODO- Implement auto locking of devices based on events from Ethernet and OnScreen
+    static final String TAG = makeLogTag(AccessController.class);
 
     /**
      * Lock the screen. Possible only if admin rights are available
@@ -26,10 +26,10 @@ public class AccessController {
         DevicePolicyManager deviceManger = (DevicePolicyManager) context.getSystemService(
                 Context.DEVICE_POLICY_SERVICE);
         try {
-            Log.d(DEBUG_TAG, "Lock requested");
+            Log.d(TAG, "Lock requested");
             deviceManger.lockNow();
         } catch (SecurityException e) {
-            Log.d(DEBUG_TAG, "No permissions given yet");
+            Log.d(TAG, "No permissions given yet");
             e.printStackTrace();
         }
     }
@@ -46,7 +46,7 @@ public class AccessController {
 
         // If no permissions yet
         if (!deviceManger.isAdminActive(compName)) {
-            Log.d(DEBUG_TAG, "Admin access requested");
+            Log.d(TAG, "Admin access requested");
             Intent intent = new Intent(DevicePolicyManager
                     .ACTION_ADD_DEVICE_ADMIN);
             intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,
