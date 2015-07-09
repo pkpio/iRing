@@ -11,7 +11,7 @@ namespace iRingGadgeteer.Utils
 #if MF_FRAMEWORK_VERSION_V4_1
     public static string ToHexString(byte[] array, string delimiter = "-")
 #else
-        public static string ToHexString(this byte[] array, string delimiter = "-")
+       public static string ToHexString(this byte[] array, string delimiter = "-")
 #endif
         {
             if (array.Length > 0)
