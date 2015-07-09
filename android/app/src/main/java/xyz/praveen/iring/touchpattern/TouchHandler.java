@@ -3,10 +3,19 @@ package xyz.praveen.iring.touchpattern;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
+
+import xyz.praveen.iring.util.LogUtils;
+
 import static java.lang.StrictMath.abs;
+import static xyz.praveen.iring.util.LogUtils.LOGD;
+import static xyz.praveen.iring.util.LogUtils.LOGI;
+import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 public class TouchHandler implements View.OnTouchListener {
+    final static String TAG = makeLogTag(TouchHandler.class);
+
     Context mContext;
+    OnTouchListener mOnTouchListener;
 
     public final int MOVEMENT_UP = 1;
     public final int MOVEMENT_RIGHT = 2;
@@ -15,78 +24,75 @@ public class TouchHandler implements View.OnTouchListener {
     public final int MOVEMENNT_PRESS = 5;
 
 
-    private float xAxe=0f;
-    private float yAxe=0f;
+    private float xAxe = 0f;
+    private float yAxe = 0f;
     private float dx = 0f;
-    private float dy =0f;
+    private float dy = 0f;
 
-    public TouchHandler(Context context){
+    /**
+     * An instance of TouchHandler. This must be sent on a view ideally spanning the whole screen
+     *
+     * @param context       Context
+     * @param touchListener Listener to receive callback for touch events
+     */
+    public TouchHandler(Context context, OnTouchListener touchListener) {
         this.mContext = context;
+        this.mOnTouchListener = touchListener;
     }
 
-    public void init(){
+    float lastXaxis = 0f;
+    float lastYaxis = 0f;
 
-    }
+    @Override
+    public boolean onTouch(View v, MotionEvent motionEvent) {
 
-    float lastXaxis=0f;
-    float lastYaxis=0f;
-
-    public boolean onTouchEvent(MotionEvent motionEvent){
-
-        final int actionPerformed=motionEvent.getAction();
-        if (motionEvent.getAction()==MotionEvent.ACTION_DOWN ){
+        final int actionPerformed = motionEvent.getAction();
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
             float xDown = motionEvent.getX();
             float yDown = motionEvent.getY();
             lastXaxis = xDown;
             lastYaxis = yDown;
-            System.out.print( "xDown is   " +xDown);
-            System.out.print("  yDown is" + yDown);
+            LOGD(TAG, "xDown is : " + xDown);
+            LOGD(TAG, "yDown is : " + yDown);
         }
-        if(motionEvent.getAction()==MotionEvent.ACTION_UP) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
             float xRelease = motionEvent.getX();
             float yRelease = motionEvent.getY();
             dx = xRelease - lastXaxis;
             dy = yRelease - lastYaxis;
-            System.out.print("dx is   " + dx);
-            System.out.print("  dy is" + dy);
-            System.out.print(" lastYaxis is " + lastYaxis);
-            System.out.print("xRelease is   " + xRelease);
-            System.out.print(" yRelease is" + yRelease);
+
+            LOGD(TAG, "dx is : " + dx);
+            LOGD(TAG, "dy is : " + dy);
+            LOGD(TAG, "last Yaxis is : " + lastYaxis);
+            LOGD(TAG, "xRelease is  : " + xRelease);
+            LOGD(TAG, "yRelease is  : " + yRelease);
         }
 
 
-        if(dy < 0 & abs(dy)>abs(dx)) {
+        if (dy < 0 & abs(dy) > abs(dx))
             SendEventToCallback(MOVEMENT_UP);
-        }
-        if(dy > 0 & abs(dy)>abs(dx)) {
+        if (dy > 0 & abs(dy) > abs(dx))
             SendEventToCallback(MOVEMENT_DOWN);
-        }
-        if(dx > 0 & abs(dx)>abs(dy))
+        if (dx > 0 & abs(dx) > abs(dy))
             SendEventToCallback(MOVEMENT_RIGHT);
-        if(dx < 0 & abs(dx)>abs(dy))
+        if (dx < 0 & abs(dx) > abs(dy))
             SendEventToCallback(MOVEMENT_LEFT);
-        if (dx==0 & dy==0)
+        if (dx == 0 & dy == 0)
             SendEventToCallback(MOVEMENNT_PRESS);
 
         return true;
 
     }
 
-    private void SendEventToCallback(int action) {
-        System.out.println("The action is " + action);
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        onTouchEvent(event);
-        return true;
-    }
 
     /**
-     * This callback will be called when ever a Touch event occurs
+     * A callback will be made when ever a Touch event occurs
      */
-
-
+    private void SendEventToCallback(int action) {
+        LOGI(TAG, "Action is : " + action);
+        if (mOnTouchListener != null)
+            mOnTouchListener.onTouchEvent(action);
+    }
 
 
 }
