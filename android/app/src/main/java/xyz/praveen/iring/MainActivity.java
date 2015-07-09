@@ -9,10 +9,12 @@ import android.widget.TextView;
 import xyz.praveen.iring.accesscontrol.AccessController;
 import xyz.praveen.iring.server.OnGadgetActionListener;
 import xyz.praveen.iring.server.ServerHandle;
+import xyz.praveen.iring.touchpattern.OnTouchListener;
 import xyz.praveen.iring.touchpattern.TouchHandler;
 
 
-public class MainActivity extends AppCompatActivity implements OnGadgetActionListener {
+public class MainActivity extends AppCompatActivity implements OnGadgetActionListener,
+        OnTouchListener {
     final String DEBUG_TAG = this.getClass().getName();
 
     AccessController mAccessControl;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
         setContentView(R.layout.activity_main);
 
         helloView = (TextView) findViewById(R.id.hello);
-        helloView.setOnTouchListener(new TouchHandler(this));
+        helloView.setOnTouchListener(new TouchHandler(this, this));
 
         // Admin permission check
         mAccessControl = new AccessController();
@@ -43,5 +45,10 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
                 helloView.setText(action);
             }
         });
+    }
+
+    @Override
+    public void onTouchEvent(int event) {
+
     }
 }
