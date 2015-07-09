@@ -35,7 +35,7 @@ namespace iRingGadgeteer
 
             // Init Accelerometer
             AccelHandler accHandler = new AccelHandler(accelerometer);
-            //accHandler.Start();
+            accHandler.Start();
 
             // Init Ethernet
             EthernetHandler ethHandler = new EthernetHandler(ethernet);

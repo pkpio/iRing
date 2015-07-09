@@ -12,10 +12,10 @@ namespace iRingGadgeteer.Modules
 {
     class EthernetHandler
     {
-        public const String ServerAddr = "http://192.168.1.109:8080/?data=something";
-        private const String IP_ADDR = "192.168.1.113";
+        public const String ServerAddr = "http://10.171.0.184:8080/";
+        private const String IP_ADDR = "10.171.0.194";
         private const String SUBNET = "255.255.254.0";
-        private const String GATEWAY = "192.168.1.1";
+        private const String GATEWAY = "10.171.0.254";
 
         EthernetJ11D mEthernet;
 
