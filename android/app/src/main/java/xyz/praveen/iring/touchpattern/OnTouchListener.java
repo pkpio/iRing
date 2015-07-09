@@ -7,5 +7,10 @@ package xyz.praveen.iring.touchpattern;
  */
 public interface OnTouchListener {
 
+    /**
+     * Callback when a touch event occurs
+     *
+     * @param event Event code
+     */
     public void onTouchEvent(int event);
 }
