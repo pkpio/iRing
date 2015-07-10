@@ -16,4 +16,9 @@
         android:layout_height="match_parent"
         android:layout_below="@id/sliding_tabs" />
 
+    <View
+        android:id="@+id/touchview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </RelativeLayout>
