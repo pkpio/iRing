@@ -7,12 +7,18 @@
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="48dip" />
+        android:layout_height="48dip"
+        android:visibility="gone" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/content_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/sliding_tabs" />
+
+    <View
+        android:id="@+id/touchview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

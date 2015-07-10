@@ -5,9 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.GridView;
 
 /**
+ * A sample fragment with images
  * Created by praveen on 9/7/15.
  */
 public class SampleFragment extends Fragment {
@@ -36,8 +37,8 @@ public class SampleFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_tab, container,
                 false);
-        ListView list = (ListView) rootView.findViewById(R.id.list);
-        list.setAdapter(new SampleListAdapter(getActivity()));
+        GridView imgGrid = (GridView) rootView.findViewById(R.id.gridview);
+        imgGrid.setAdapter(new SampleImageAdapter(getActivity()));
         return rootView;
     }
 }

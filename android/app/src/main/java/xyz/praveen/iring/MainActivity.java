@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import com.astuetz.PagerSlidingTabStrip;
 
 import xyz.praveen.iring.accesscontrol.AccessController;
+import xyz.praveen.iring.accesscontrol.EventBox;
 import xyz.praveen.iring.server.OnGadgetActionListener;
 import xyz.praveen.iring.server.ServerHandle;
 import xyz.praveen.iring.touchpattern.OnTouchListener;
+import xyz.praveen.iring.touchpattern.TouchHandler;
 
 import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
         ViewPager pager = (ViewPager) findViewById(R.id.content_pager);
         pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
 
+        // Touch view init
+        findViewById(R.id.touchview).setOnTouchListener(new TouchHandler(this, this));
+
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
         tabs.setViewPager(pager);
@@ -50,14 +55,14 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // -TODO- Action
+                EventBox.sendGadgetEvent(action, System.currentTimeMillis());
             }
         });
     }
 
     @Override
     public void onTouchEvent(int event) {
-
+        EventBox.sendTouchEvent(event);
     }
 
     /**

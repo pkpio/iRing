@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 
-import xyz.praveen.iring.util.LogUtils;
-
 import static java.lang.StrictMath.abs;
 import static xyz.praveen.iring.util.LogUtils.LOGD;
 import static xyz.praveen.iring.util.LogUtils.LOGI;
@@ -21,7 +19,7 @@ public class TouchHandler implements View.OnTouchListener {
     public final int MOVEMENT_RIGHT = 2;
     public final int MOVEMENT_DOWN = 3;
     public final int MOVEMENT_LEFT = 4;
-    public final int MOVEMENNT_PRESS = 5;
+    public final int MOVEMENT_PRESS = 5;
 
 
     private float xAxe = 0f;
@@ -52,8 +50,8 @@ public class TouchHandler implements View.OnTouchListener {
             float yDown = motionEvent.getY();
             lastXaxis = xDown;
             lastYaxis = yDown;
-            LOGD(TAG, "xDown is : " + xDown);
-            LOGD(TAG, "yDown is : " + yDown);
+            /*LOGD(TAG, "xDown is : " + xDown);
+            LOGD(TAG, "yDown is : " + yDown);*/
         }
         if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
             float xRelease = motionEvent.getX();
@@ -61,11 +59,11 @@ public class TouchHandler implements View.OnTouchListener {
             dx = xRelease - lastXaxis;
             dy = yRelease - lastYaxis;
 
-            LOGD(TAG, "dx is : " + dx);
+           /* LOGD(TAG, "dx is : " + dx);
             LOGD(TAG, "dy is : " + dy);
             LOGD(TAG, "last Yaxis is : " + lastYaxis);
             LOGD(TAG, "xRelease is  : " + xRelease);
-            LOGD(TAG, "yRelease is  : " + yRelease);
+            LOGD(TAG, "yRelease is  : " + yRelease);*/
         }
 
 
@@ -78,9 +76,9 @@ public class TouchHandler implements View.OnTouchListener {
         if (dx < 0 & abs(dx) > abs(dy))
             SendEventToCallback(MOVEMENT_LEFT);
         if (dx == 0 & dy == 0)
-            SendEventToCallback(MOVEMENNT_PRESS);
+            SendEventToCallback(MOVEMENT_PRESS);
 
-        return true;
+        return false;
 
     }
 
@@ -89,7 +87,7 @@ public class TouchHandler implements View.OnTouchListener {
      * A callback will be made when ever a Touch event occurs
      */
     private void SendEventToCallback(int action) {
-        LOGI(TAG, "Action is : " + action);
+        //LOGI(TAG, "Action is : " + action);
         if (mOnTouchListener != null)
             mOnTouchListener.onTouchEvent(action);
     }
