@@ -74,6 +74,13 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
                 // Consume mode change events and return
                 if (action == MODE_LOCK || action == MODE_CTRL) {
                     mode = action;
+
+                    // Set title of current mode
+                    if (mode == MODE_CTRL)
+                        setTitle("Remote control");
+                    else
+                        setTitle("Intelli lock");
+
                     return;
                 }
 
@@ -97,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
 
     @Override
     public void onHitrateUpdate(int hitrate) {
-        setTitle("Hit rate : " + hitrate);
+        setTitle("Intelli lock    Hit rate : " + hitrate);
     }
 
     void doUIControl(int action) {
@@ -105,16 +112,17 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
 
         switch (action) {
             case Globals.MOVEMENT_LEFT:
+            case Globals.MOVEMENT_DOWN:
                 int curPos = mPager.getCurrentItem();
                 if (curPos > 0)
                     mPager.setCurrentItem(curPos - 1);
                 break;
             case Globals.MOVEMENT_RIGHT:
+            case Globals.MOVEMENT_UP:
                 int curPos1 = mPager.getCurrentItem();
                 if (curPos1 < myPagerAdapter.getCount() - 1)
                     mPager.setCurrentItem(curPos1 + 1);
                 break;
-            //-TODO- Other actions
         }
 
     }
