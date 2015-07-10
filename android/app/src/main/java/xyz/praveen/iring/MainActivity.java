@@ -15,13 +15,14 @@ import xyz.praveen.iring.server.OnGadgetActionListener;
 import xyz.praveen.iring.server.ServerHandle;
 import xyz.praveen.iring.touchpattern.OnTouchActionListener;
 import xyz.praveen.iring.touchpattern.TouchHandler;
+import xyz.praveen.iring.util.OnHitrateChangeListener;
 
 import static xyz.praveen.iring.util.LogUtils.LOGD;
 import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 
 public class MainActivity extends AppCompatActivity implements OnGadgetActionListener,
-        OnTouchActionListener {
+        OnTouchActionListener, OnHitrateChangeListener {
     final static String TAG = makeLogTag(MainActivity.class);
 
     AccessController mAccessControl;
@@ -56,8 +57,9 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
         tabs.setViewPager(pager);
 
-        // Give a mContext for EventBox
+        // Give a Context and Hitrate listener for EventBox
         EventBox.mContext = this;
+        EventBox.hitrateChangeListener = this;
     }
 
     @Override
@@ -89,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
             EventBox.sendTouchEvent(action);
     }
 
+    @Override
+    public void onHitrateUpdate(int hitrate) {
+        setTitle("Hit rate : " + hitrate);
+    }
 
     /**
      * A sample pager for different pages of images

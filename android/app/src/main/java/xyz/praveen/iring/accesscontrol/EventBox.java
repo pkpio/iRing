@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.praveen.iring.model.Event;
+import xyz.praveen.iring.util.OnHitrateChangeListener;
 
 import static xyz.praveen.iring.util.LogUtils.LOGD;
 import static xyz.praveen.iring.util.LogUtils.LOGI;
@@ -58,6 +59,7 @@ public class EventBox {
     static Event mTouchEvent;
     static Event mGadgetEvent;
     public static Context mContext;
+    public static OnHitrateChangeListener hitrateChangeListener;
 
     /**
      * Send a touch event to the event box
@@ -80,8 +82,9 @@ public class EventBox {
                     LOGI(TAG, "No corresponding gadget event");
                     recordHistory(false);
                 } else {
-                    LOGI(TAG, "Touch event : " + mTouchEvent.action
-                            + " Gadget event : " + mGadgetEvent.action);
+                    if (mTouchEvent != null && mGadgetEvent != null)
+                        LOGI(TAG, "Touch event : " + mTouchEvent.action
+                                + " Gadget event : " + mGadgetEvent.action);
                     recordHistory(true);
                 }
 
@@ -126,6 +129,8 @@ public class EventBox {
         int curHitRate = (hits * 100) / HISTORY_SIZE;
         mMaxHitRate = (curHitRate > mMaxHitRate) ? curHitRate : mMaxHitRate;
         LOGD(TAG, "Hit rate : " + curHitRate);
+        if (hitrateChangeListener != null)
+            hitrateChangeListener.onHitrateUpdate(curHitRate);
 
         /**
          * Send lock commands only if hit rate has crossed some threshold in history.
