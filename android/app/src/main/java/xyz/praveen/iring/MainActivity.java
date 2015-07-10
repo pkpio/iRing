@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
 
         // Initialize the ViewPager and set an adapter
         ViewPager pager = (ViewPager) findViewById(R.id.content_pager);
-        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(adapter);
+        pager.setOffscreenPageLimit(adapter.getCount());
 
         // Touch view init
         findViewById(R.id.touchview).setOnTouchListener(new TouchHandler(this, this));
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
      */
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final String[] TITLES = {"Categories", "Home", "Top Paid", "Top Free", "Top Grossing", "Top New Paid",
+        public final String[] TITLES = {"Categories", "Home", "Top Paid", "Top Free", "Top Grossing", "Top New Paid",
                 "Top New Free", "Trending"};
 
         public MyPagerAdapter(FragmentManager fm) {
