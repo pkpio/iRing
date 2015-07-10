@@ -11,6 +11,7 @@ namespace iRingGadgeteer
         public const int MOVEMENT_RIGHT = 2;
         public const int MOVEMENT_DOWN = 3;
         public const int MOVEMENT_LEFT = 4;
+        public const int MOVEMENT_UNKNOWN = 10;
 
         private int accX;
         private int accY;
@@ -89,6 +90,15 @@ namespace iRingGadgeteer
                 result = MOVEMENT_UP;
                 Debug.Print("up");
             }
+
+            // If no event occured and readings are off the zero point
+            if (result == 0 && (System.Math.Abs(array[0]) > 70 
+                || System.Math.Abs(array[1]) > 70 || System.Math.Abs(array[2]) > 70))
+            {
+                result = MOVEMENT_UNKNOWN;
+                Debug.Print("unknown");
+            }
+
             return result;
        }
         public class FixedSizedQueue
