@@ -90,25 +90,14 @@ namespace iRingGadgeteer
         public int checkPattern(int[] array)
         {  
             int result = 0;
-            if (array[0] > 50 && array[1] > 70 && array[2] < -100)
-            {
-                result = MOVEMENT_RIGHT;
-                Debug.Print("right");
-            }
-            else if (array[0] > 70 && array[1] < 0)
-            {
-                result = MOVEMENT_DOWN;
-                Debug.Print("down");
-            }
-            if (array[0] < -20 && array[1] < -70 && array[2] > 50)
-            {
-                result = MOVEMENT_LEFT;
-                Debug.Print("left");
-            }
-            else if (array[0] < -100)
+            
+            if (array[2] > 50)
             {
                 result = MOVEMENT_UP;
-                Debug.Print("up");
+            }
+            else if (array[2] < - 50)
+            {
+                result = MOVEMENT_DOWN;
             }
 
             // If no event occured and readings are off the zero point
