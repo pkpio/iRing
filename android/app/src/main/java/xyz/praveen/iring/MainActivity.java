@@ -15,9 +15,11 @@ import xyz.praveen.iring.server.OnGadgetActionListener;
 import xyz.praveen.iring.server.ServerHandle;
 import xyz.praveen.iring.touchpattern.OnTouchActionListener;
 import xyz.praveen.iring.touchpattern.TouchHandler;
+import xyz.praveen.iring.util.Globals;
 import xyz.praveen.iring.util.OnHitrateChangeListener;
 
 import static xyz.praveen.iring.util.LogUtils.LOGD;
+import static xyz.praveen.iring.util.LogUtils.LOGI;
 import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
     final static String TAG = makeLogTag(MainActivity.class);
 
     AccessController mAccessControl;
+    MyPagerAdapter myPagerAdapter;
+    ViewPager mPager;
 
     final int MODE_LOCK = 5;
     final int MODE_CTRL = 6;
@@ -45,17 +49,17 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
         mServerHandle.startServer();
 
         // Initialize the ViewPager and set an adapter
-        ViewPager pager = (ViewPager) findViewById(R.id.content_pager);
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(adapter);
-        pager.setOffscreenPageLimit(adapter.getCount());
+        mPager = (ViewPager) findViewById(R.id.content_pager);
+        myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(myPagerAdapter);
+        mPager.setOffscreenPageLimit(myPagerAdapter.getCount());
 
         // Touch view init
         findViewById(R.id.touchview).setOnTouchListener(new TouchHandler(this, this));
 
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
-        tabs.setViewPager(pager);
+        tabs.setViewPager(mPager);
 
         // Give a Context and Hitrate listener for EventBox
         EventBox.mContext = this;
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
 
                 else
                     // CTRL mode => Handle the control of UI
-                    LOGD(TAG, "Handle control for action : " + action);
+                    doUIControl(action);
             }
         });
     }
@@ -94,6 +98,25 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
     @Override
     public void onHitrateUpdate(int hitrate) {
         setTitle("Hit rate : " + hitrate);
+    }
+
+    void doUIControl(int action) {
+        LOGI(TAG, "Handle control for action : " + action);
+
+        switch (action) {
+            case Globals.MOVEMENT_LEFT:
+                int curPos = mPager.getCurrentItem();
+                if (curPos > 0)
+                    mPager.setCurrentItem(curPos - 1);
+                break;
+            case Globals.MOVEMENT_RIGHT:
+                int curPos1 = mPager.getCurrentItem();
+                if (curPos1 < myPagerAdapter.getCount() - 1)
+                    mPager.setCurrentItem(curPos1 + 1);
+                break;
+            //-TODO- Other actions
+        }
+
     }
 
     /**

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 
+import xyz.praveen.iring.util.Globals;
+
 import static java.lang.StrictMath.abs;
 import static xyz.praveen.iring.util.LogUtils.LOGD;
 import static xyz.praveen.iring.util.LogUtils.LOGI;
@@ -15,11 +17,11 @@ public class TouchHandler implements View.OnTouchListener {
     Context mContext;
     OnTouchActionListener mOnTouchActionListener;
 
-    public final int MOVEMENT_UP = 1;
-    public final int MOVEMENT_RIGHT = 2;
-    public final int MOVEMENT_DOWN = 3;
-    public final int MOVEMENT_LEFT = 4;
-    public final int MOVEMENT_PRESS = 5;
+    public final int MOVEMENT_UP = Globals.MOVEMENT_UP;
+    public final int MOVEMENT_RIGHT = Globals.MOVEMENT_RIGHT;
+    public final int MOVEMENT_DOWN = Globals.MOVEMENT_DOWN;
+    public final int MOVEMENT_LEFT = Globals.MOVEMENT_LEFT;
+    public final int MOVEMENT_PRESS = Globals.MOVEMENT_PRESS;
 
 
     private float xAxe = 0f;

@@ -63,8 +63,9 @@ public class ServerHandle {
 
         @Override
         public Response serve(IHTTPSession session) {
-            int action = Integer.valueOf(session.getParms().get("data"));
-            LOGI(TAG, "Gadget action code : " + action);
+            String data = session.getParms().get("data");
+            LOGI(TAG, "Gadget data : " + data);
+            int action = Integer.valueOf(data);
 
             // Pass action
             if (mOnActionListener != null)
