@@ -7,10 +7,10 @@
 
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/md_red_500</item>
+        <item name="android:background">@android:color/black</item>
 
         <!-- Support library compatibility -->
-        <item name="background">@color/md_red_500</item>
+        <item name="background">@android:color/black</item>
     </style>
 
 </resources>
