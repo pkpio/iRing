@@ -19,6 +19,7 @@ import xyz.praveen.iring.touch.TouchHandler;
 import xyz.praveen.iring.util.Globals;
 import xyz.praveen.iring.util.OnHitrateChangeListener;
 
+import static xyz.praveen.iring.util.LogUtils.LOGD;
 import static xyz.praveen.iring.util.LogUtils.LOGI;
 import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
@@ -100,10 +101,11 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
         if (mode == MODE_LOCK)
             // Lock mode => Pass events to EventBox
             EventBox.sendTouchEvent(action);
+        LOGD(TAG, "Touch event : " + action);
     }
 
     @Override
-    public void onHitrateUpdate(int hitrate) {
+    public void onHitrateUpdate(float hitrate) {
         setTitle("Intelli lock    Hit rate : " + hitrate);
     }
 

@@ -11,5 +11,5 @@ public interface OnHitrateChangeListener {
      *
      * @param hitrate New hitrate
      */
-    void onHitrateUpdate(int hitrate);
+    void onHitrateUpdate(float hitrate);
 }
