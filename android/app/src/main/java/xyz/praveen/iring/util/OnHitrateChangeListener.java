@@ -6,5 +6,10 @@ package xyz.praveen.iring.util;
  */
 public interface OnHitrateChangeListener {
 
-    public void onHitrateUpdate(int hitrate);
+    /**
+     * Called when hitrate is updated
+     *
+     * @param hitrate New hitrate
+     */
+    void onHitrateUpdate(int hitrate);
 }

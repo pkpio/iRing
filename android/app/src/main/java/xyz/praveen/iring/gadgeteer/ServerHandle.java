@@ -1,17 +1,16 @@
-package xyz.praveen.iring.server;
-
-import android.util.Log;
+package xyz.praveen.iring.gadgeteer;
 
 import java.io.IOException;
 
 import fi.iki.elonen.NanoHTTPD;
-import xyz.praveen.iring.util.LogUtils;
 
 import static xyz.praveen.iring.util.LogUtils.LOGE;
 import static xyz.praveen.iring.util.LogUtils.LOGI;
 import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 /**
+ * Handles all server interactions with connected clients
+ * <p/>
  * Created by praveen on 27/6/15.
  */
 public class ServerHandle {

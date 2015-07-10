@@ -1,4 +1,4 @@
-package xyz.praveen.iring.accesscontrol;
+package xyz.praveen.iring.access;
 
 import android.content.Context;
 import android.os.Handler;
@@ -15,6 +15,7 @@ import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 /**
  * Takes events from Gadgeteer, Touch screen and performs matching.
+ * Also issues lock signals based on current hitrate and history.
  * <p/>
  * Created by praveen on 9/7/15.
  */
@@ -46,6 +47,9 @@ public class EventBox {
      * Min value of the Max hit rate after which locking happens if hit rate fell
      * below the HitRateThreshold. This is to ensure that locking won't happen during
      * initial device setup.
+     * <p/>
+     * So, to sum up, no locking for low hitrates until hit rate reaches this
+     * value at least once in it's history after application started.
      */
     static final int MIN_MAX_HITRATE_LOCK = 50;
 
@@ -67,8 +71,6 @@ public class EventBox {
      * @param action Action code.
      */
     public synchronized static void sendTouchEvent(int action) {
-        //mTouchEvents.add(new Event(action, System.currentTimeMillis()));
-
         mTouchEvent = new Event(action, System.currentTimeMillis());
 
         // Set gadget event to null
@@ -98,7 +100,6 @@ public class EventBox {
     }
 
     public synchronized static void sendGadgetEvent(int action, long timestamp) {
-        //mGadgetEvents.add(new Event(action, timestamp));
         mGadgetEvent = new Event(action, timestamp);
 
         // Check if there is a corresponding touch event. Else, foul play
@@ -129,6 +130,8 @@ public class EventBox {
         int curHitRate = (hits * 100) / HISTORY_SIZE;
         mMaxHitRate = (curHitRate > mMaxHitRate) ? curHitRate : mMaxHitRate;
         LOGD(TAG, "Hit rate : " + curHitRate);
+
+        // Notify listener about hitrate
         if (hitrateChangeListener != null)
             hitrateChangeListener.onHitrateUpdate(curHitRate);
 
@@ -136,8 +139,7 @@ public class EventBox {
          * Send lock commands only if hit rate has crossed some threshold in history.
          * This will ensure that locking won't occur in the initial setup
          */
-        if (mMaxHitRate > MIN_MAX_HITRATE_LOCK && curHitRate < MIN_HITRATE_LOCK) {
+        if (mMaxHitRate > MIN_MAX_HITRATE_LOCK && curHitRate < MIN_HITRATE_LOCK)
             AccessController.lockDevice(mContext);
-        }
     }
 }

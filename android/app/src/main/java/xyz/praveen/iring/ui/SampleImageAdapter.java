@@ -1,4 +1,4 @@
-package xyz.praveen.iring;
+package xyz.praveen.iring.ui;
 
 import android.content.Context;
 import android.view.View;
@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Random;
 
+import xyz.praveen.iring.R;
+
 /**
- * A sample adapter to list items
+ * A sample adapter to show random cute images in a grid.
  * <p/>
  * Created by praveen on 9/7/15.
  */
@@ -95,12 +97,7 @@ public class SampleImageAdapter extends BaseAdapter {
      * @return Random number
      */
     public static int randInt(int min, int max) {
-
-        // Usually this can be a field rather than a method variable
-        Random rand = new Random();
-
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
-        return rand.nextInt((max - min) + 1) + min;
+        // nextInt is normally exclusive of the top value, so add 1 to make it inclusive
+        return new Random().nextInt((max - min) + 1) + min;
     }
 }

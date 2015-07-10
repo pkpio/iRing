@@ -1,4 +1,4 @@
-package xyz.praveen.iring.touchpattern;
+package xyz.praveen.iring.touch;
 
 import android.content.Context;
 import android.view.MotionEvent;
@@ -7,8 +7,7 @@ import android.view.View;
 import xyz.praveen.iring.util.Globals;
 
 import static java.lang.StrictMath.abs;
-import static xyz.praveen.iring.util.LogUtils.LOGD;
-import static xyz.praveen.iring.util.LogUtils.LOGI;
+import static xyz.praveen.iring.util.LogUtils.LOGV;
 import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 public class TouchHandler implements View.OnTouchListener {
@@ -23,9 +22,6 @@ public class TouchHandler implements View.OnTouchListener {
     public final int MOVEMENT_LEFT = Globals.MOVEMENT_LEFT;
     public final int MOVEMENT_PRESS = Globals.MOVEMENT_PRESS;
 
-
-    private float xAxe = 0f;
-    private float yAxe = 0f;
     private float dx = 0f;
     private float dy = 0f;
 
@@ -52,8 +48,9 @@ public class TouchHandler implements View.OnTouchListener {
             float yDown = motionEvent.getY();
             lastXaxis = xDown;
             lastYaxis = yDown;
-            /*LOGD(TAG, "xDown is : " + xDown);
-            LOGD(TAG, "yDown is : " + yDown);*/
+
+            LOGV(TAG, "last Xaxis is : " + lastXaxis);
+            LOGV(TAG, "last Yaxis is : " + lastYaxis);
         }
         if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
             float xRelease = motionEvent.getX();
@@ -61,11 +58,12 @@ public class TouchHandler implements View.OnTouchListener {
             dx = xRelease - lastXaxis;
             dy = yRelease - lastYaxis;
 
-           /* LOGD(TAG, "dx is : " + dx);
-            LOGD(TAG, "dy is : " + dy);
-            LOGD(TAG, "last Yaxis is : " + lastYaxis);
-            LOGD(TAG, "xRelease is  : " + xRelease);
-            LOGD(TAG, "yRelease is  : " + yRelease);*/
+            LOGV(TAG, "dx is : " + dx);
+            LOGV(TAG, "dy is : " + dy);
+            LOGV(TAG, "last Xaxis is : " + lastXaxis);
+            LOGV(TAG, "last Yaxis is : " + lastYaxis);
+            LOGV(TAG, "xRelease is  : " + xRelease);
+            LOGV(TAG, "yRelease is  : " + yRelease);
         }
 
 

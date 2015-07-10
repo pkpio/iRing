@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 /**
+ * Broadcast receiver that receives callbacks for Device Administrative actions.
+ * <p/>
  * Created by praveen on 22/6/15.
  */
 public class IRingAdminReceiver extends DeviceAdminReceiver {
@@ -16,10 +18,6 @@ public class IRingAdminReceiver extends DeviceAdminReceiver {
         return context.getSharedPreferences(
                 DeviceAdminReceiver.class.getName(), 0);
     }
-
-    static String PREF_PASSWORD_QUALITY = "password_quality";
-    static String PREF_PASSWORD_LENGTH = "password_length";
-    static String PREF_MAX_FAILED_PW = "max_failed_pw";
 
     void showToast(Context context, CharSequence msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();

@@ -1,4 +1,4 @@
-package xyz.praveen.iring.accesscontrol;
+package xyz.praveen.iring.access;
 
 import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
@@ -13,6 +13,7 @@ import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 /**
  * Access control handling
+ * <p/>
  * Created by praveen on 17/6/15.
  */
 public class AccessController {

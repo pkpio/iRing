@@ -1,4 +1,4 @@
-package xyz.praveen.iring.touchpattern;
+package xyz.praveen.iring.touch;
 
 /**
  * For callbacks on TouchEvents

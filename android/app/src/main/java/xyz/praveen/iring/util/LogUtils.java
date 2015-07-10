@@ -5,13 +5,15 @@ import android.util.Log;
 import xyz.praveen.iring.BuildConfig;
 
 /**
- * All logging should be redirected through this class.
+ * All logging should be redirected through this class. Handles construction of
+ * Log Tags for classes. And offers a Logging verbosity level control for the entire
+ * application logs.
  * <p/>
  * Created by praveen on 9/7/15.
  */
 
 public class LogUtils {
-    private static final String LOG_PREFIX = "MS_";
+    private static final String LOG_PREFIX = "iRing_";
     private static final int LOG_PREFIX_LENGTH = LOG_PREFIX.length();
     private static final int MAX_LOG_TAG_LENGTH = 23;
 

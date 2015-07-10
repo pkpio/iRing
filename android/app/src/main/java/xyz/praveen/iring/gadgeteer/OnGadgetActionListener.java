@@ -1,4 +1,4 @@
-package xyz.praveen.iring.server;
+package xyz.praveen.iring.gadgeteer;
 
 /**
  * For gadget action callbacks
