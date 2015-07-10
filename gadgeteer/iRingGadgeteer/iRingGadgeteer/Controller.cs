@@ -6,6 +6,9 @@ namespace iRingGadgeteer
 {
     class Controller
     {
+        /**
+         * possible mode changing events
+         */
         public const int MODE_LOCK = 5;
         public const int MODE_INPUT = 6;
 
@@ -22,6 +25,7 @@ namespace iRingGadgeteer
             this.mAccelHandler = accHandler;
             this.mEthernetHandle = ethernetHandle;
 
+            //setting the callbacks
             mButtonHandlerCali.SetCallback(ButtonEventCali);
             mButtonHandlerMode.SetCallback(ButtonEventMode);
             mAccelHandler.SetCallback(AccelEvent);
@@ -32,10 +36,12 @@ namespace iRingGadgeteer
             if (action == ButtonHandler.BTN_RELEASE)
             {
                 mAccelHandler.CalibrateAccel();
-                mEthernetHandle.OpenUrl(EthernetHandler.ServerAddr);
             }
         }
 
+        /**
+         * callback that is called when the button for changing the mode is pressed
+         */
         void ButtonEventMode(int action)
         {
             if (action == ButtonHandler.BTN_RELEASE)
@@ -50,42 +56,18 @@ namespace iRingGadgeteer
                     currentMode = MODE_LOCK;
                     Debug.Print("Mode changed to lock");
                 }
-
+                //sending the mode change to the app
                 mEthernetHandle.SendData(currentMode);
             }
         }
 
         /*
-         * fired when a motion is detected, gets then send via bluetooth to the phone
+         * fired when a motion is detected, gets then sent via bluetooth to the phone
          */
         void AccelEvent(int action)
         {
             mEthernetHandle.SendData(action);
 
         }
-
-        /**
-         * Set a callback for calibrate Button events.
-         *
-        public void SetButtonCallbackCali(ButtonHandler.BtnEventCallback callback)
-        {
-            mButtonHandlerCali.SetCallback(callback);
-        }
-
-        /**
-         * Set a callback for Mode Button events.
-         *
-        public void SetButtonCallbackMode(ButtonHandler.BtnEventCallback callback)
-        {
-            mButtonHandlerMode.SetCallback(callback);
-        }
-
-        /**
-         * Set a callback for Accelerometer events.
-         *
-        public void SetAccelCallback(AccelHandler.AccEventCallback callback)
-        {
-            mAccelHandler.SetCallback(callback);
-        }*/
     }
 }

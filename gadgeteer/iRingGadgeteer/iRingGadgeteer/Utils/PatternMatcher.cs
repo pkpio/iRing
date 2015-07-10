@@ -5,8 +5,15 @@ using Gadgeteer.Modules.GHIElectronics;
 
 namespace iRingGadgeteer
 {
+    /**
+     * contains the queue for automatic window calibration and pattern matches 
+     * new acceleration readings for movement events
+     */
     class PatternMatcher
     {
+        /**
+         * possible movement events
+         */
         public const int MOVEMENT_UP = 1;
         public const int MOVEMENT_RIGHT = 2;
         public const int MOVEMENT_DOWN = 3;
@@ -16,11 +23,11 @@ namespace iRingGadgeteer
         private int accX;
         private int accY;
         private int accZ;
-        private int eCount;
+        private int eCount; //number of readings since movement event started
 
         private int windowSize;
 
-        private FixedSizedQueue queue;
+        private FixedSizedQueue queue; //window in which the last readings are stored
 
         public PatternMatcher()
         {
@@ -31,6 +38,9 @@ namespace iRingGadgeteer
             eCount = 0;
         }
 
+        /**
+         * adds a new acceleration reading to the queue
+         */
         public int addReading(Accelerometer.MeasurementCompleteEventArgs e)
         {
             accX = (int)(e.X * 1000);
@@ -39,6 +49,11 @@ namespace iRingGadgeteer
             int[] reading = new int[] { accX, accY, accZ };
             int[] cal = new int[3];
             int result = 0;
+            /** 
+             * when no movement event has been registered yet, the reading gets calibrated 
+             * by subtracting the first reading in the queue from the current reading
+             * then we check if a movement event can bbe found by calling checkPattern(cal)
+             */
             if(eCount == 0)
             {
                 int[] first = (int[]) queue.Peek();
@@ -54,6 +69,7 @@ namespace iRingGadgeteer
                     }
                 }               
             }
+            //if a movement event has already been registered we wait until the event is done before looking for new ones
             else
             {
                 eCount++;
@@ -67,6 +83,10 @@ namespace iRingGadgeteer
             return result;
         }
 
+        /**
+         * by looking at the acceleration along the x-, y- and z-axis we distinguish movement events and
+         * return the registered event
+         */
         public int checkPattern(int[] array)
         {  
             int result = 0;
@@ -101,6 +121,9 @@ namespace iRingGadgeteer
 
             return result;
        }
+        /**
+         * a queue with fixed length that automatically dequeues if the limit is reached
+         */
         public class FixedSizedQueue
         {
             Queue q = new Queue();

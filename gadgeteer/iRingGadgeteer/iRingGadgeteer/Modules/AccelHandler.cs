@@ -4,20 +4,20 @@ using Gadgeteer.Modules.GHIElectronics;
 
 namespace iRingGadgeteer.Modules
 {
+    /**
+     * Handles acceleration events and sends movement events to callback
+     */
     class AccelHandler
     {
+        /**
+         * relevant events for acceleration measurements
+         */
         public const int MOVEMENT_UP = 1;
         public const int MOVEMENT_RIGHT = 2;
         public const int MOVEMENT_DOWN = 3;
         public const int MOVEMENT_LEFT = 4;
-        public const int MEASUREMENT_COMPLETE = 5;
-        public const int THRESHOLD_EXCEEDED = 6;
 
-        private int accX;
-        private int accY;
-        private int accZ;
-        //private int accel;
-
+        //contains automatic window calibration and pattern matching for movement events
         PatternMatcher pMatcher;
 
         /**
@@ -44,6 +44,7 @@ namespace iRingGadgeteer.Modules
 
         /**
          * Calibrating the accelerometer
+         * Not used anymore, instead automatic window calibration
          */
         public void CalibrateAccel()
         {
@@ -51,51 +52,22 @@ namespace iRingGadgeteer.Modules
             Debug.Print("calibrated");
         }
 
-        /*
-         * get acceleration of movement event
+        /**
+         * Event that is fired everytime a new reading from the accelerometer is available
          */
-        /*public int getAccel()
-        {
-            return accel;
-        }*/
-
         void accelerometer_MeasurementComplete(Accelerometer sender, Accelerometer.MeasurementCompleteEventArgs e)
         {
-            /*accX = (int) (e.X * 1000);
-            accY = (int) (e.Y * 1000);
-            accZ = (int) ((e.Z * 1000)-1000);*/
-            //Debug.Print("" + accX + "," + accY + "," + accZ);
             int result = pMatcher.addReading(e);
+            //when a movement event is registered it is send to the callback
             if(result > 0)
             {
                 SendEventToCallback(result);
             }
-            /*if (accX > 50 && accY > 70 && accZ < -100)
-            {
-                accel = accX;
-                SendEventToCallback(MOVEMENT_RIGHT);
-                Debug.Print("right " + accel);
-            } 
-            else if (accX > 70 && accY < 0)
-            {
-                accel = accZ;
-                SendEventToCallback(MOVEMENT_DOWN);
-                Debug.Print("down "+accel);
-            }          
-            if(accX < -20 && accY < -70 && accZ > 50)
-            {
-                accel = accX;
-                SendEventToCallback(MOVEMENT_LEFT);
-                Debug.Print("left "+accel);
-            }
-            else if (accX < -100)
-            {
-                accel = accZ;
-                SendEventToCallback(MOVEMENT_UP);
-                Debug.Print("up " + accel);
-            }*/
         }
 
+        /**
+         * sends an acceleration event to the callback that was registered
+         */
         private void SendEventToCallback(int action)
         {
             if (eventCallback != null)
