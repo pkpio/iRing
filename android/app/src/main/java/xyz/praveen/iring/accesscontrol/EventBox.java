@@ -1,5 +1,6 @@
 package xyz.praveen.iring.accesscontrol;
 
+import android.content.Context;
 import android.os.Handler;
 
 import java.util.ArrayList;
@@ -30,11 +31,33 @@ public class EventBox {
      */
     static final int HISTORY_SIZE = 10;
 
+    /**
+     * Hit or fail history over last 10 events
+     */
     static List<Integer> mHistory = new ArrayList<>(10);
+
+    /**
+     * Maximum hit rate achieved through out the entire history
+     */
+    static int mMaxHitRate = 0;
+
+    /**
+     * Min value of the Max hit rate after which locking happens if hit rate fell
+     * below the HitRateThreshold. This is to ensure that locking won't happen during
+     * initial device setup.
+     */
+    static final int MIN_MAX_HITRATE_LOCK = 50;
+
+    /**
+     * Hit rate below which locking happens. This works only after max hit rate
+     * reaches MIN_MAX_HITRATE_LOCK
+     */
+    static final int MIN_HITRATE_LOCK = 20;
 
     static Handler handler;
     static Event mTouchEvent;
     static Event mGadgetEvent;
+    public static Context mContext;
 
     /**
      * Send a touch event to the event box
@@ -99,6 +122,17 @@ public class EventBox {
         int hits = 0;
         for (int i = 0; i < mHistory.size(); i++)
             hits += mHistory.get(i);
-        LOGD(TAG, "Error rate : " + (HISTORY_SIZE - hits) * 100);
+
+        int curHitRate = (hits * 100) / HISTORY_SIZE;
+        mMaxHitRate = (curHitRate > mMaxHitRate) ? curHitRate : mMaxHitRate;
+        LOGD(TAG, "Hit rate : " + curHitRate);
+
+        /**
+         * Send lock commands only if hit rate has crossed some threshold in history.
+         * This will ensure that locking won't occur in the initial setup
+         */
+        if (mMaxHitRate > MIN_MAX_HITRATE_LOCK && curHitRate < MIN_HITRATE_LOCK) {
+            AccessController.lockDevice(mContext);
+        }
     }
 }

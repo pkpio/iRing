@@ -13,17 +13,22 @@ import xyz.praveen.iring.accesscontrol.AccessController;
 import xyz.praveen.iring.accesscontrol.EventBox;
 import xyz.praveen.iring.server.OnGadgetActionListener;
 import xyz.praveen.iring.server.ServerHandle;
-import xyz.praveen.iring.touchpattern.OnTouchListener;
+import xyz.praveen.iring.touchpattern.OnTouchActionListener;
 import xyz.praveen.iring.touchpattern.TouchHandler;
 
+import static xyz.praveen.iring.util.LogUtils.LOGD;
 import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 
 public class MainActivity extends AppCompatActivity implements OnGadgetActionListener,
-        OnTouchListener {
+        OnTouchActionListener {
     final static String TAG = makeLogTag(MainActivity.class);
 
     AccessController mAccessControl;
+
+    final int MODE_LOCK = 5;
+    final int MODE_CTRL = 6;
+    int mode = MODE_LOCK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
         tabs.setViewPager(pager);
+
+        // Give a mContext for EventBox
+        EventBox.mContext = this;
     }
 
     @Override
@@ -55,18 +63,31 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                EventBox.sendGadgetEvent(action, System.currentTimeMillis());
+                // Consume mode change events and return
+                if (action == MODE_LOCK || action == MODE_CTRL) {
+                    mode = action;
+                    return;
+                }
+
+                if (mode == MODE_LOCK)
+                    // Lock mode => Pass events to EventBox
+                    EventBox.sendGadgetEvent(action, System.currentTimeMillis());
+
+                else
+                    // CTRL mode => Handle the control of UI
+                    LOGD(TAG, "Handle control for action : " + action);
             }
         });
     }
 
     @Override
-    public void onTouchEvent(int event) {
-        EventBox.sendTouchEvent(event);
+    public void onTouchAction(int action) {
+        EventBox.sendTouchEvent(action);
     }
 
+
     /**
-     *
+     * A sample pager for different pages of images
      */
     public class MyPagerAdapter extends FragmentPagerAdapter {
 

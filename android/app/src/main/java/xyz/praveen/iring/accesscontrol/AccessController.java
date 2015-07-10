@@ -12,6 +12,7 @@ import xyz.praveen.iring.IRingAdminReceiver;
 import static xyz.praveen.iring.util.LogUtils.makeLogTag;
 
 /**
+ * Access control handling
  * Created by praveen on 17/6/15.
  */
 public class AccessController {

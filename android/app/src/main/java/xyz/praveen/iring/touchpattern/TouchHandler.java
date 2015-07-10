@@ -13,7 +13,7 @@ public class TouchHandler implements View.OnTouchListener {
     final static String TAG = makeLogTag(TouchHandler.class);
 
     Context mContext;
-    OnTouchListener mOnTouchListener;
+    OnTouchActionListener mOnTouchActionListener;
 
     public final int MOVEMENT_UP = 1;
     public final int MOVEMENT_RIGHT = 2;
@@ -33,9 +33,9 @@ public class TouchHandler implements View.OnTouchListener {
      * @param context       Context
      * @param touchListener Listener to receive callback for touch events
      */
-    public TouchHandler(Context context, OnTouchListener touchListener) {
+    public TouchHandler(Context context, OnTouchActionListener touchListener) {
         this.mContext = context;
-        this.mOnTouchListener = touchListener;
+        this.mOnTouchActionListener = touchListener;
     }
 
     float lastXaxis = 0f;
@@ -87,9 +87,8 @@ public class TouchHandler implements View.OnTouchListener {
      * A callback will be made when ever a Touch event occurs
      */
     private void SendEventToCallback(int action) {
-        //LOGI(TAG, "Action is : " + action);
-        if (mOnTouchListener != null)
-            mOnTouchListener.onTouchEvent(action);
+        if (mOnTouchActionListener != null)
+            mOnTouchActionListener.onTouchAction(action);
     }
 
 
