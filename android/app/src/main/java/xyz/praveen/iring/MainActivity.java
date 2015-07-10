@@ -84,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements OnGadgetActionLis
 
     @Override
     public void onTouchAction(int action) {
-        EventBox.sendTouchEvent(action);
+        if (mode == MODE_LOCK)
+            // Lock mode => Pass events to EventBox
+            EventBox.sendTouchEvent(action);
     }
 
 
